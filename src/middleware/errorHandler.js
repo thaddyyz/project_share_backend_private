@@ -72,3 +72,33 @@ export const withErrorHandling = (handler) => {
     }
   };
 };
+
+// Express-compatible error handler
+export const expressErrorHandler = (err, req, res, next) => {
+  console.error('Error:', {
+    message: err.message,
+    url: req.url,
+    method: req.method,
+    timestamp: new Date().toISOString()
+  });
+
+  let statusCode = 500;
+  let message = 'Internal server error';
+
+  if (err instanceof AppError) {
+    statusCode = err.statusCode;
+    message = err.message;
+  } else if (err.message.includes('Rate limit')) {
+    statusCode = 429;
+    message = err.message;
+  } else if (err.message.includes('Authentication') || err.message.includes('token')) {
+    statusCode = 401;
+    message = 'Authentication failed';
+  }
+
+  if (statusCode === 500 && process.env.NODE_ENV === 'production') {
+    message = 'Internal server error';
+  }
+
+  res.status(statusCode).json({ error: message });
+};

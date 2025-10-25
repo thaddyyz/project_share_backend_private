@@ -24,6 +24,7 @@ export const expressAuthToken = () => {
       req.user = user;
       next();
     } catch (error) {
+      console.log('Authentication error:', error);
       res.status(401).json({ error: 'Invalid token' });
     }
   };
