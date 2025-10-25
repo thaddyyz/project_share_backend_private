@@ -1,6 +1,6 @@
 // Core exports
-export { authenticateToken } from './middleware/auth.js';
-export { rateLimit } from './middleware/rateLimit.js';
+export { authenticateToken, expressAuthToken } from './middleware/auth.js';
+export { rateLimit, expressRateLimit } from './middleware/rateLimit.js';
 export { encrypt, decrypt, safeDecrypt } from './utils/encryption.js'; // All encryption together
 export { default as supabase } from './db/supabaseClient.js';
 

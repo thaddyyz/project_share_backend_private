@@ -32,3 +32,33 @@ export const rateLimit = async (identifier, windowMs = 5000, maxRequests = 1) =>
     }
   }
 };
+
+export const expressRateLimit = (windowMs = 5000, maxRequests = 1) => {
+  return (req, res, next) => {
+    try {
+      const identifier = req.user?.id || req.ip;
+      const now = Date.now();
+
+      if (!global.rateLimitMap) global.rateLimitMap = new Map();
+      if (!global.rateLimitMap.has(identifier)) {
+        global.rateLimitMap.set(identifier, []);
+      }
+
+      const requests = global.rateLimitMap.get(identifier);
+      const recentRequests = requests.filter(time => time > now - windowMs);
+      
+      if (recentRequests.length >= maxRequests) {
+        const retryAfter = Math.ceil((recentRequests[0] + windowMs - now) / 1000);
+        return res.status(429).json({ 
+          error: `Rate limit exceeded. Try again in ${retryAfter} seconds.` 
+        });
+      }
+
+      recentRequests.push(now);
+      global.rateLimitMap.set(identifier, recentRequests);
+      next();
+    } catch (error) {
+      next(); // Fail open if rate limiting fails
+    }
+  };
+};
