@@ -1,7 +1,8 @@
 import { verifyToken } from '../db/supabaseClient.js';
 
 export const authenticateToken = async (request) => {
-  const authHeader = request.headers.get('authorization');
+  // const authHeader = request.headers.get('authorization');
+  const authHeader =req.headers.authorization;
   const token = authHeader?.replace('Bearer ', '');
   
   if (!token) {
