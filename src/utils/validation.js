@@ -60,7 +60,7 @@ export const validateProfileData = (profileData) => {
 };
 
 export const validateAccountData = (accountData) => {
-  const allowedFields = ['name', 'phone', 'subscription_type'];
+  const allowedFields = ['display_name', 'subscription_type'];
   
   const invalidFields = Object.keys(accountData).filter(
     field => !allowedFields.includes(field)
