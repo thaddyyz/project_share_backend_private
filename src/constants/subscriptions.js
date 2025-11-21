@@ -1,8 +1,14 @@
 export const SUBSCRIPTION_LIMITS = {
-  free: {
+  tester: {
     maxProfiles: 1,
   },
-  pro: {
+  standard: {
+    maxProfiles: 5,
+  },
+  tester: {
+    maxProfiles: 5,
+  },
+  trial: {
     maxProfiles: 5,
   },
 };
