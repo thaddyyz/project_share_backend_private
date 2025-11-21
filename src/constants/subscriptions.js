@@ -1,9 +1,9 @@
 export const SUBSCRIPTION_LIMITS = {
   tester: {
-    maxProfiles: 1,
+    maxProfiles: 5,
   },
   standard: {
-    maxProfiles: 5,
+    maxProfiles: 1,
   },
   paid: {
     maxProfiles: 5,
