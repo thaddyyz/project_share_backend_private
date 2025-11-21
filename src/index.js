@@ -23,3 +23,5 @@ export {
 
 // Config export
 export { config } from './config/index.js';
+
+export { SUBSCRIPTION_LIMITS } from './constants/subscriptions.js';
